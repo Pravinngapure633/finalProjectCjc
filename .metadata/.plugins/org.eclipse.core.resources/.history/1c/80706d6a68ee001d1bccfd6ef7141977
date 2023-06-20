@@ -1,0 +1,118 @@
+package com.cjc.hl.em.main.serviceImpl;
+
+import java.io.IOException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.cjc.hl.em.main.model.AddressDetails;
+import com.cjc.hl.em.main.model.Document;
+import com.cjc.hl.em.main.model.Enquiry;
+import com.cjc.hl.em.main.model.Guarantor;
+import com.cjc.hl.em.main.model.Registration;
+import com.cjc.hl.em.main.repository.DocumentRepository;
+import com.cjc.hl.em.main.repository.EnquiryRepository;
+import com.cjc.hl.em.main.repository.RegistrationRepository;
+import com.cjc.hl.em.main.service.RegistrationService;
+import com.google.gson.Gson;
+
+@Service
+public class RegistrationServiceImpl implements RegistrationService {
+
+	@Autowired
+	private RegistrationRepository registrationRepository;
+
+	@Autowired
+	private EnquiryRepository enquiryRepository;
+
+	@Autowired
+	private DocumentRepository documentRepository;
+
+	@Override
+	public Registration saveRegistration(Integer enquiryId, MultipartFile adharCard, MultipartFile panCard,
+			MultipartFile photo, MultipartFile sign, MultipartFile salarySlip, MultipartFile itr,
+			MultipartFile bankPass, MultipartFile incomeCertificate, MultipartFile propertyDocument,
+			MultipartFile guarantorSign, MultipartFile guarantorBankPass, String reg) throws IOException {
+		
+		
+		
+		Registration r = new Registration();
+
+		Enquiry enquiry = enquiryRepository.findById(enquiryId).get();
+		Gson g = new Gson();
+		Registration rr = g.fromJson(reg, Registration.class);
+
+		r.setEnquiryId(enquiryId);
+		r.setDate(enquiry.getDate());
+		r.setFirstName(enquiry.getFirstName());
+		r.setMiddleName(enquiry.getMiddleName());
+		r.setLastName(enquiry.getLastName());
+		r.setGender(enquiry.getGender());
+		r.setDob(enquiry.getDob());
+		r.setEmail(enquiry.getEmail());
+		r.setPhoneNo(enquiry.getPhoneNo());
+		r.setPanNo(enquiry.getPanNo());
+		r.setAdharNo(enquiry.getAdharNo());
+		r.setLoanAmount(enquiry.getLoanAmount());
+		r.setLoanType(enquiry.getLoanType());
+		r.setIncomeDetails(enquiry.getIncomeDetails());
+		r.setOccuption(rr.getOccuption());
+		
+		Document doc = new Document();
+		doc.setAdharCard(adharCard.getBytes());
+		doc.setPanCard(panCard.getBytes());
+		doc.setPhoto(photo.getBytes());
+		doc.setSign(sign.getBytes());
+		doc.setSalarySlip(salarySlip.getBytes());
+		doc.setiTR(itr.getBytes());
+		doc.setBankPass(bankPass.getBytes());
+		doc.setIncomeCertificate(incomeCertificate.getBytes());
+		doc.setPropertyDocument(propertyDocument.getBytes());
+		doc.setGuarantorSign(guarantorSign.getBytes());
+		doc.setGuarantorBankPass(guarantorBankPass.getBytes());
+
+		r.setDocument(doc);
+
+		r.setPreviousLoan(rr.getPreviousLoan());
+		r.setBankDetails(rr.getBankDetails());
+		r.setAddressDetails(rr.getAddressDetails());
+
+//		AddressDetails addressDetails = rr.getGuarantor().getGuarantorAddress();
+//		addressDetails.setCityName(rr.getAddressDetails().getCityName());
+//		addressDetails.setDistName(rr.getAddressDetails().getDistName());
+//		addressDetails.setPincode(rr.getAddressDetails().getPincode());
+//		addressDetails.setState(rr.getAddressDetails().getState());
+//		rr.getGuarantor().setGuarantorAddress(addressDetails);
+
+		 Guarantor guarantor = rr.getGuarantor();
+		 guarantor.setGuarantorAddress(rr.getGuarantor().getGuarantorAddress());
+		 guarantor.setIncomeDetails(rr.getGuarantor().getIncomeDetails());
+		 r.setGuarantor(guarantor);
+
+		r.setPropertyDetails(rr.getPropertyDetails());
+
+		return registrationRepository.save(r);
+	}
+
+	@Override
+	public List<Registration> getAllRegistration() {
+		
+		return registrationRepository.findAll();
+	}
+
+	@Override
+	public Registration getRegistrationWithEnquiryId(Integer enquiryId) {
+	
+		Enquiry enquiry = enquiryRepository.findById(enquiryId).get();
+		
+		if(enquiry.getEnquiryId()==enquiryId) {
+			
+			return registrationRepository.findByenquiryId(enquiryId);
+			
+		}
+		return null;
+	}
+
+}

@@ -1,0 +1,221 @@
+package com.cjc.hl.em.main.model;
+
+import java.util.Arrays;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.SequenceGenerator;
+
+@Entity
+public class Document {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "doc")
+	@SequenceGenerator( name = "doc",initialValue = 401,allocationSize =1 ,sequenceName = "documentId_seq")
+	private Integer documentId;
+	private Integer registrationId;
+	@Lob
+	private byte[] adharCard;
+	@Lob
+	private byte[] panCard;
+	@Lob
+	private byte[] photo;
+	@Lob
+	private byte[] sign;
+	@Lob
+	private byte[] salarySlip;
+	@Lob
+	private byte[] iTR;
+	@Lob
+	private byte[] bankPass; 
+	@Lob
+	private byte[] incomeCertificate;	
+	@Lob
+	private byte [] propertyDocument;	
+	@Lob
+	private byte[] guarantorSign;	
+	@Lob
+	private byte[] guarantorBankPass;	
+
+
+	public Document() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+	
+	public Document(Integer documentId, Integer registrationId, byte[] adharCard, byte[] panCard, byte[] photo,
+			byte[] sign, byte[] salarySlip, byte[] iTR, byte[] bankPass, byte[] incomeCertificate,
+			byte[] propertyDocument, byte[] guarantorSign, byte[] guarantorBankPass) {
+		super();
+		this.documentId = documentId;
+		this.registrationId = registrationId;
+		this.adharCard = adharCard;
+		this.panCard = panCard;
+		this.photo = photo;
+		this.sign = sign;
+		this.salarySlip = salarySlip;
+		this.iTR = iTR;
+		this.bankPass = bankPass;
+		this.incomeCertificate = incomeCertificate;
+		this.propertyDocument = propertyDocument;
+		this.guarantorSign = guarantorSign;
+		this.guarantorBankPass = guarantorBankPass;
+	}
+
+
+	
+
+	public Integer getRegistrationId() {
+		return registrationId;
+	}
+
+
+
+	public void setRegistrationId(Integer registrationId) {
+		this.registrationId = registrationId;
+	}
+
+
+
+	public Integer getDocumentId() {
+		return documentId;
+	}
+
+
+	public void setDocumentId(Integer documentId) {
+		this.documentId = documentId;
+	}
+
+
+	public byte[] getAdharCard() {
+		return adharCard;
+	}
+
+
+	public void setAdharCard(byte[] adharCard) {
+		this.adharCard = adharCard;
+	}
+
+
+	public byte[] getPanCard() {
+		return panCard;
+	}
+
+
+	public void setPanCard(byte[] panCard) {
+		this.panCard = panCard;
+	}
+
+
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+
+
+	public byte[] getSign() {
+		return sign;
+	}
+
+
+	public void setSign(byte[] sign) {
+		this.sign = sign;
+	}
+
+
+	public byte[] getSalarySlip() {
+		return salarySlip;
+	}
+
+
+	public void setSalarySlip(byte[] salarySlip) {
+		this.salarySlip = salarySlip;
+	}
+
+
+	
+
+
+	public byte[] getiTR() {
+		return iTR;
+	}
+
+
+	public void setiTR(byte[] iTR) {
+		this.iTR = iTR;
+	}
+
+
+	public byte[] getBankPass() {
+		return bankPass;
+	}
+
+
+	public void setBankPass(byte[] bankPass) {
+		this.bankPass = bankPass;
+	}
+
+
+	public byte[] getIncomeCertificate() {
+		return incomeCertificate;
+	}
+
+
+	public void setIncomeCertificate(byte[] incomeCertificate) {
+		this.incomeCertificate = incomeCertificate;
+	}
+
+
+	public byte[] getPropertyDocument() {
+		return propertyDocument;
+	}
+
+
+	public void setPropertyDocument(byte[] propertyDocument) {
+		this.propertyDocument = propertyDocument;
+	}
+
+
+	public byte[] getGuarantorSign() {
+		return guarantorSign;
+	}
+
+
+	public void setGuarantorSign(byte[] guarantorSign) {
+		this.guarantorSign = guarantorSign;
+	}
+
+
+	public byte[] getGuarantorBankPass() {
+		return guarantorBankPass;
+	}
+
+
+	public void setGuarantorBankPass(byte[] guarantorBankPass) {
+		this.guarantorBankPass = guarantorBankPass;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Document [documentId=" + documentId + ", adharCard=" + Arrays.toString(adharCard) + ", panCard="
+				+ Arrays.toString(panCard) + ", photo=" + Arrays.toString(photo) + ", sign=" + Arrays.toString(sign)
+				+ ", salarySlip=" + Arrays.toString(salarySlip) + ", ITR=" + Arrays.toString(iTR) + ", bankPass="
+				+ Arrays.toString(bankPass) + ", incomeCertificate=" + Arrays.toString(incomeCertificate)
+				+ ", propertyDocument=" + Arrays.toString(propertyDocument) + ", guarantorSign="
+				+ Arrays.toString(guarantorSign) + ", guarantorBankPass=" + Arrays.toString(guarantorBankPass) + "]";
+	}
+
+	
+	
+
+}

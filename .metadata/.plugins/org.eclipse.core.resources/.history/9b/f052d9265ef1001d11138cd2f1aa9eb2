@@ -1,0 +1,55 @@
+package com.cjc.hl.em.main.model;
+
+import java.util.Arrays;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.SequenceGenerator;
+
+@Entity
+public class Document {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "doc")
+	@SequenceGenerator( name = "doc",initialValue = 401,allocationSize =1 ,sequenceName = "documentId_seq")
+	private Integer documentId;
+	private Integer registrationId;
+	@Lob
+	private byte[] adharCard;
+	@Lob
+	private byte[] panCard;
+	@Lob
+	private byte[] photo;
+	@Lob
+	private byte[] sign;
+	@Lob
+	private byte[] salarySlip;
+	@Lob
+	private byte[] iTR;
+	@Lob
+	private byte[] bankPass; 
+	@Lob
+	private byte[] incomeCertificate;	
+	@Lob
+	private byte [] propertyDocument;	
+	@Lob
+	private byte[] guarantorSign;	
+	@Lob
+	private byte[] guarantorBankPass;	
+
+
+	public Document() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+	
+
+	
+	
+
+}

@@ -1,0 +1,5 @@
+package com.cjc.hl.em.main.service;
+
+public interface DocumentService {
+
+}

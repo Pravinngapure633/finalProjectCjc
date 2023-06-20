@@ -1,0 +1,93 @@
+package com.cjc.hl.em.main.serviceImpl;
+
+import java.io.IOException;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.cjc.hl.em.main.model.AddressDetails;
+import com.cjc.hl.em.main.model.Document;
+import com.cjc.hl.em.main.model.Enquiry;
+import com.cjc.hl.em.main.model.Guarantor;
+import com.cjc.hl.em.main.model.Registration;
+import com.cjc.hl.em.main.repository.DocumentRepository;
+import com.cjc.hl.em.main.repository.EnquiryRepository;
+import com.cjc.hl.em.main.repository.RegistrationRepository;
+import com.cjc.hl.em.main.service.RegistrationService;
+import com.google.gson.Gson;
+
+@Service
+public class RegistrationServiceImpl implements RegistrationService {
+
+	@Autowired
+	private RegistrationRepository registrationRepository;
+
+	@Autowired
+	private EnquiryRepository enquiryRepository;
+
+
+
+	@Override
+	public Registration saveRegistration(Registration reg, Integer enquiryId) {
+
+		Registration r = new Registration();
+
+		Enquiry enquiry = enquiryRepository.findById(enquiryId).get();
+
+		if (enquiry.getEnquiryId() == enquiryId) {
+			r.setEnquiryId(enquiryId);
+			r.setDate(enquiry.getDate());
+			r.setFirstName(enquiry.getFirstName());
+			r.setMiddleName(enquiry.getMiddleName());
+			r.setLastName(enquiry.getLastName());
+			r.setGender(enquiry.getGender());
+			r.setDob(enquiry.getDob());
+			r.setEmail(enquiry.getEmail());
+			r.setPhoneNo(enquiry.getPhoneNo());
+			r.setPanNo(enquiry.getPanNo());
+			r.setAdharNo(enquiry.getAdharNo());
+			r.setLoanAmount(enquiry.getLoanAmount());
+			r.setLoanType(enquiry.getLoanType());
+			r.setIncomeDetails(enquiry.getIncomeDetails());
+			r.setOccuption(reg.getOccuption());
+			r.setStatus(enquiry.getStatus());
+
+			r.setPreviousLoan(reg.getPreviousLoan());
+			r.setBankDetails(reg.getBankDetails());
+			r.setAddressDetails(reg.getAddressDetails());
+
+			Guarantor guarantor = reg.getGuarantor();
+			guarantor.setGuarantorAddress(reg.getGuarantor().getGuarantorAddress());
+			guarantor.setIncomeDetails(reg.getGuarantor().getIncomeDetails());
+			r.setGuarantor(guarantor);
+
+			r.setPropertyDetails(reg.getPropertyDetails());
+
+			return registrationRepository.save(r);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public List<Registration> getAllRegistration() {
+
+		return registrationRepository.findAll();
+	}
+
+	@Override
+	public Registration getRegistrationWithEnquiryId(Integer enquiryId) {
+
+		Enquiry enquiry = enquiryRepository.findById(enquiryId).get();
+
+		if (enquiry.getEnquiryId() == enquiryId) {
+
+			return registrationRepository.findByenquiryId(enquiryId);
+
+		}
+		return null;
+	}
+
+}

@@ -1,0 +1,13 @@
+package com.cjc.hl.em.main.service;
+
+import java.util.List;
+
+import com.cjc.hl.em.main.model.Cibil;
+
+public interface CibilService {
+
+	String createCibilScore(Cibil c,String panNo);
+
+	List<Cibil> getAllCibil();
+
+}
